@@ -1,31 +1,38 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
+	// bufio は　fmt.Scanより高速
 )
 
 func max(a, b int) int {
 	if a > b {
 		return a
-	} else {
-		return b
 	}
+	return b
 }
 
 func main() {
+	in := bufio.NewReader(os.Stdin)
 	var n int
-	fmt.Scan(&n)
+	fmt.Fscan(in, &n)
 	a := make([]int, n)
 	for i := 0; i < n; i++ {
-		fmt.Scan(&a[i])
+		fmt.Fscan(in, &a[i])
 	}
 	b := make([]int, n)
 	for i := 0; i < n; i++ {
-		fmt.Scan(&b[i])
+		fmt.Fscan(in, &b[i])
 	}
-	var ma = 0
+	ma := 0
+	past := 0
 	for i := 0; i < n; i++ {
 		ma = max(a[i], ma)
-		fmt.Println(ma * b[i])
+		ans := max(ma*b[i], past)
+		fmt.Println(ans)
+		past = max(ans, past)
 	}
+
 }
